@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './footer.component.html',
 })
 export class FooterComponent {
+  readonly currentYear = new Date().getFullYear();
   links = [
     { id: 'about', label: 'About' },
     { id: 'projects', label: 'Projects' },

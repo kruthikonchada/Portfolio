@@ -4,13 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Unlayered — takes cascade priority over Tailwind's @layer base,
+   ensuring font-size:17px applies identically in dev and prod builds. */
+html { font-size: 17px; }
+
 /* ═══════════════════════════════════════════════════════════
    BASE
    ═══════════════════════════════════════════════════════════ */
 @layer base {
   html {
     scroll-behavior: smooth;
-    font-size: 17px;
   }
 
   body {
