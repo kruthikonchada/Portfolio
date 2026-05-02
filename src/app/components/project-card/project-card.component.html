@@ -1,0 +1,98 @@
+<article
+  class="tilt-card group relative glass-card overflow-hidden cursor-pointer flex flex-col h-full"
+  [ngStyle]="cardStyle()"
+  (mousemove)="onMouseMove($event)"
+  (mouseenter)="hovered.set(true)"
+  (mouseleave)="onMouseLeave()"
+>
+  <!-- Mouse-following spotlight -->
+  <div
+    class="absolute inset-0 pointer-events-none rounded-2xl z-0 transition-opacity duration-200"
+    [style.background]="spotlightStyle()"
+  ></div>
+
+  <!-- Gradient top accent line — animates in on hover -->
+  <div
+    class="absolute top-0 inset-x-0 h-0.5 transition-all duration-500 opacity-0 group-hover:opacity-100"
+    [ngClass]="accentGradient()"
+  ></div>
+
+  <!-- Card body -->
+  <div class="relative z-10 p-6 flex flex-col gap-4 flex-1">
+
+    <!-- Header row -->
+    <div class="flex items-start justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <!-- Icon with pop-scale on hover -->
+        <div
+          class="w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0
+                 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-cyan-500/20"
+          [ngClass]="iconBg()"
+        >
+          {{ project().icon }}
+        </div>
+        <div>
+          <h3 class="text-white font-bold text-base leading-tight group-hover:text-cyan-300 transition-colors duration-300">
+            {{ project().title }}
+          </h3>
+          <p class="text-sm text-slate-500 mt-0.5">{{ project().subtitle }}</p>
+        </div>
+      </div>
+
+      <!-- Performance badge -->
+      <div
+        class="flex-shrink-0 transition-all duration-300"
+        [class.scale-110]="hovered()"
+      >
+        <div
+          class="flex flex-col items-center px-2.5 py-1.5 rounded-xl text-center min-w-[80px] border"
+          [ngClass]="badgeClasses()"
+        >
+          <span class="text-base leading-none">{{ project().badge.icon }}</span>
+          <span class="text-xs font-bold mt-0.5 leading-tight">{{ project().badge.value }}</span>
+          <span class="text-[11px] opacity-70 leading-none mt-0.5">{{ project().badge.label }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <p class="text-slate-400 text-base leading-relaxed group-hover:text-slate-300 transition-colors duration-300">
+      {{ project().description }}
+    </p>
+
+    <!-- Highlights with staggered reveal on hover -->
+    <ul class="space-y-1.5 flex-1">
+      @for (h of project().highlights; track h; let i = $index) {
+        <li
+          class="flex items-start gap-2 text-sm text-slate-400 group-hover:text-slate-300 transition-all duration-300"
+          [style.transition-delay]="(i * 40) + 'ms'"
+        >
+          <svg class="w-3.5 h-3.5 text-cyan-500 flex-shrink-0 mt-0.5 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4"/>
+          </svg>
+          <span>{{ h }}</span>
+        </li>
+      }
+    </ul>
+
+    <!-- Tags -->
+    <div class="flex flex-wrap gap-1.5 pt-2 border-t border-white/5">
+      @for (tag of project().tags; track tag.name; let i = $index) {
+        <span
+          class="px-2 py-0.5 rounded-md text-xs font-mono font-medium transition-all duration-200"
+          [ngClass]="tagClass(tag.color)"
+          [style.transition-delay]="(i * 30) + 'ms'"
+          [class.scale-105]="hovered()"
+        >
+          {{ tag.name }}
+        </span>
+      }
+    </div>
+  </div>
+
+  <!-- Bottom border glow on hover -->
+  <div
+    class="absolute bottom-0 inset-x-0 h-px transition-all duration-500 opacity-0 group-hover:opacity-60"
+    [ngClass]="accentGradient()"
+  ></div>
+</article>

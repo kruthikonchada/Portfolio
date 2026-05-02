@@ -1,0 +1,82 @@
+<nav
+  class="fixed top-0 inset-x-0 z-50 transition-all duration-500"
+  [ngClass]="scrolled() ? 'bg-slate-950/90 backdrop-blur-xl border-b border-white/8 shadow-[0_1px_30px_rgba(0,0,0,0.4)]' : ''"
+>
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+
+    <!-- Logo -->
+    <a
+      (click)="scrollTo('hero')"
+      class="font-mono text-lg font-bold gradient-text cursor-pointer select-none hover:opacity-90 transition-opacity"
+    >
+      KK<span class="text-cyan-400">.</span>dev
+    </a>
+
+    <!-- Desktop nav -->
+    <ul class="hidden md:flex items-center gap-8">
+      @for (link of navLinks; track link.id) {
+        <li>
+          <a
+            (click)="scrollTo(link.id)"
+            class="relative text-sm font-medium tracking-wide transition-colors duration-200 cursor-pointer py-1"
+            [ngClass]="activeSection() === link.id ? 'text-cyan-400' : 'text-slate-400 hover:text-slate-200'"
+          >
+            {{ link.label }}
+            <!-- Animated underline for active link -->
+            <span
+              class="absolute -bottom-0.5 left-0 h-px rounded-full transition-all duration-300"
+              [ngClass]="activeSection() === link.id
+                ? 'w-full bg-gradient-to-r from-cyan-400 to-indigo-400 opacity-100'
+                : 'w-0 bg-gradient-to-r from-cyan-400 to-indigo-400 opacity-0'"
+            ></span>
+          </a>
+        </li>
+      }
+    </ul>
+
+    <!-- Hire Me CTA -->
+    <a
+      href="mailto:kruthi.konchada12&#64;gmail.com"
+      class="hidden md:inline-flex btn-primary text-sm py-2 px-5"
+    >
+      Hire Me
+    </a>
+
+    <!-- Mobile menu toggle -->
+    <button
+      class="md:hidden text-slate-400 hover:text-cyan-400 transition-colors p-1"
+      (click)="mobileOpen.set(!mobileOpen())"
+      aria-label="Toggle menu"
+    >
+      <svg class="w-6 h-6 transition-transform duration-300" [class.rotate-90]="mobileOpen()" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        @if (!mobileOpen()) {
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        } @else {
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        }
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  @if (mobileOpen()) {
+    <div class="md:hidden bg-slate-950/98 backdrop-blur-xl border-t border-white/8 px-6 py-5"
+         style="animation: slideUp 0.3s cubic-bezier(0.16,1,0.3,1) forwards;">
+      <ul class="flex flex-col gap-1">
+        @for (link of navLinks; track link.id) {
+          <li>
+            <a
+              (click)="scrollTo(link.id); mobileOpen.set(false)"
+              class="flex items-center gap-3 py-2.5 px-3 rounded-xl transition-all duration-200 cursor-pointer font-medium text-slate-300 hover:text-cyan-400 hover:bg-white/4"
+              [ngClass]="activeSection() === link.id ? 'text-cyan-400 bg-cyan-500/8' : ''"
+            >
+              <span class="w-1 h-1 rounded-full flex-shrink-0"
+                    [ngClass]="activeSection() === link.id ? 'bg-cyan-400' : 'bg-slate-600'"></span>
+              {{ link.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  }
+</nav>

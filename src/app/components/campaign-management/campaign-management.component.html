@@ -1,0 +1,355 @@
+<section id="campaign-management" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Section header -->
+    <div class="mb-12 text-center">
+      <div class="flex items-center justify-center gap-3 mb-4">
+        <div class="h-px w-16 bg-gradient-to-r from-transparent to-white/10"></div>
+        <span class="badge-cyan tracking-widest uppercase font-mono text-xs">Campaign Management Platform</span>
+        <div class="h-px w-16 bg-gradient-to-l from-transparent to-white/10"></div>
+      </div>
+      <h2 class="section-title">Bulk Campaign Delivery</h2>
+      <p class="section-subtitle mx-auto">
+        A high-scale messaging pipeline that dispatches WhatsApp and SMS campaigns to 10,000+ recipients
+        through batched async processing, Redis-backed delivery tracking, and intelligent SMS fallback.
+      </p>
+    </div>
+
+    <!-- Challenge / Solution / Impact -->
+    <div class="grid md:grid-cols-3 gap-5 mb-10">
+      <div class="glass-card p-6 border-t-2 border-red-500/50">
+        <p class="text-xs font-mono uppercase tracking-widest text-red-400 mb-3">The Challenge</p>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          Sending promotional messages to tens of thousands of users was not scalable — no batching,
+          no fallback mechanism, and zero real-time visibility into delivery status.
+        </p>
+      </div>
+      <div class="glass-card p-6 border-t-2 border-blue-500/50">
+        <p class="text-xs font-mono uppercase tracking-widest text-blue-400 mb-3">The Solution</p>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          Built an end-to-end pipeline: Angular UI for campaign setup, Spring Boot for batched async
+          dispatch, Redis for live delivery-state tracking, and automatic SMS fallback via Twilio.
+        </p>
+      </div>
+      <div class="glass-card p-6 border-t-2 border-emerald-500/50">
+        <p class="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-3">The Impact</p>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          10,000+ recipient campaigns dispatched reliably with 96%+ delivery rates, real-time dashboard
+          visibility, and automatic retry via SMS for unreachable WhatsApp numbers.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── Campaign Ops Console ── -->
+    <div class="rounded-2xl overflow-hidden border border-slate-700/60 shadow-2xl shadow-black/50 mb-8">
+
+      <!-- Console title bar -->
+      <div class="bg-slate-800 px-5 py-3 flex items-center gap-3 border-b border-slate-700/60">
+        <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+        <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+        <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+        <span class="ml-3 font-mono text-xs text-slate-400 tracking-wide">
+          Campaign Ops Console &nbsp;·&nbsp; POST /api/v1/campaign/dispatch
+        </span>
+        <div class="ml-auto flex items-center gap-3">
+          @if (state() === 'dispatching') {
+            <span class="flex items-center gap-2 text-xs font-mono text-cyan-400 animate-pulse">
+              <svg class="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+              </svg>
+              Dispatching...
+            </span>
+          }
+          <button
+            (click)="launchCampaign()"
+            class="text-xs font-mono px-4 py-1.5 rounded-lg transition-all duration-200"
+            [ngClass]="state() === 'idle'
+              ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/30'
+              : 'bg-slate-700 text-slate-400 border border-slate-600 hover:bg-slate-600'"
+          >
+            {{ state() === 'idle' ? '▶ Launch Campaign' : '↺ Reset' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Two-panel body -->
+      <div class="bg-slate-950 grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-slate-800">
+
+        <!-- LEFT: Campaign config + batch queue -->
+        <div class="p-6 space-y-6">
+
+          <!-- Campaign header card -->
+          <div>
+            <p class="text-xs font-mono uppercase tracking-widest text-cyan-400 mb-4">▸ Campaign</p>
+            <div class="glass-card p-4 space-y-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-indigo-500 flex items-center justify-center text-lg shrink-0">
+                  📡
+                </div>
+                <div>
+                  <div class="font-semibold text-white text-sm">Diwali Offer 2024 — Flash Deal</div>
+                  <div class="text-xs text-slate-500 font-mono">CID-C4821 &nbsp;·&nbsp; Nov 1, 2024 &nbsp;·&nbsp; 10:00 AM IST</div>
+                </div>
+              </div>
+              <div class="border-t border-slate-700/60 pt-3 space-y-1.5">
+                <div class="flex items-start gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 mt-1.5"></span>
+                  <span class="text-xs font-mono text-slate-400">Channel: WhatsApp Business API (primary) · SMS / Twilio (fallback)</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 mt-1.5"></span>
+                  <span class="text-xs font-mono text-slate-400">Template: <span class="text-emerald-400">{{ messagePreview }}</span></span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-slate-500 shrink-0"></span>
+                  <span class="text-xs font-mono text-slate-400">Recipients: <span class="text-white">10,247</span> &nbsp;·&nbsp; Opt-outs filtered: <span class="text-red-400">53</span> &nbsp;·&nbsp; Batch size: <span class="text-cyan-400">2,500</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Batch dispatch queue -->
+          <div>
+            <p class="text-xs font-mono uppercase tracking-widest text-slate-500 mb-3">▸ Dispatch Queue</p>
+            <div class="space-y-2">
+              @for (batch of batches; track batch.label; let i = $index) {
+                <div
+                  class="flex items-center gap-3 p-3 rounded-xl border transition-all duration-300"
+                  [ngClass]="state() !== 'idle' && revealedBatches() > i
+                    ? 'border-cyan-500/40 bg-cyan-500/5'
+                    : 'border-slate-800 bg-slate-900/50'"
+                >
+                  <div
+                    class="w-9 h-9 rounded-lg flex items-center justify-center text-xs font-bold font-mono shrink-0 transition-colors duration-300"
+                    [ngClass]="state() !== 'idle' && revealedBatches() > i
+                      ? 'bg-cyan-500/20 text-cyan-300'
+                      : 'bg-slate-800 text-slate-400'"
+                  >
+                    B{{ i + 1 }}
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="text-sm font-medium text-white">
+                      {{ batch.label }}
+                      <span class="text-slate-400 font-mono text-xs ml-1">{{ batch.count }} recipients</span>
+                    </div>
+                    <div class="text-xs text-slate-500 font-mono truncate">{{ batch.note }}</div>
+                  </div>
+                  @if (state() !== 'idle' && revealedBatches() > i) {
+                    <span class="text-xs font-mono px-2 py-0.5 rounded-full border shrink-0 bg-cyan-500/10 text-cyan-400 border-cyan-500/30">
+                      ✓ SENT
+                    </span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: Live dispatch monitor -->
+        <div class="p-6 flex flex-col gap-4 min-h-[440px]">
+          <p class="text-xs font-mono uppercase tracking-widest text-cyan-400">▸ Live Dispatch Monitor</p>
+
+          @if (state() === 'idle') {
+            <div class="flex-1 flex flex-col items-center justify-center text-center gap-3 opacity-30">
+              <svg class="w-10 h-10 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              <p class="text-sm font-mono text-slate-500">Press "Launch Campaign" to begin dispatch</p>
+            </div>
+          }
+
+          @if (state() !== 'idle') {
+
+            <!-- Progress bar -->
+            <div class="space-y-2 animate-slide-up">
+              <div class="flex justify-between items-center">
+                <span class="text-xs font-mono text-slate-400">Dispatch Progress</span>
+                <span class="text-xs font-mono text-cyan-400">{{ progressPercent() | number:'1.0-0' }}%</span>
+              </div>
+              <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div
+                  class="h-full bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-full transition-all duration-700"
+                  [style.width.%]="progressPercent()"
+                ></div>
+              </div>
+            </div>
+
+            <!-- Live counters -->
+            <div class="grid grid-cols-2 gap-3 animate-slide-up">
+              <div class="glass-card p-3 text-center">
+                <div class="text-2xl font-bold font-mono text-white tabular-nums">{{ totalSent() | number }}</div>
+                <div class="text-xs font-mono text-slate-500 mt-0.5">Messages Sent</div>
+              </div>
+              <div class="glass-card p-3 text-center">
+                <div class="text-2xl font-bold font-mono text-emerald-400 tabular-nums">{{ deliveredCount() | number }}</div>
+                <div class="text-xs font-mono text-slate-500 mt-0.5">Delivered</div>
+              </div>
+            </div>
+
+            <!-- Batch log stream -->
+            <div class="space-y-2">
+              @for (log of logs; track log.time; let i = $index) {
+                @if (revealedBatches() > i) {
+                  <div
+                    class="rounded-xl border p-3 animate-slide-up"
+                    [ngClass]="log.type === 'success'
+                      ? 'bg-emerald-500/5 border-emerald-500/25'
+                      : log.type === 'warn'
+                        ? 'bg-yellow-500/5 border-yellow-500/25'
+                        : 'bg-blue-500/8 border-blue-500/30'"
+                  >
+                    <div class="flex items-start gap-2">
+                      <span
+                        class="font-mono text-xs shrink-0 mt-0.5"
+                        [ngClass]="log.type === 'success' ? 'text-emerald-400' : log.type === 'warn' ? 'text-yellow-400' : 'text-blue-400'"
+                      >[{{ log.time }}]</span>
+                      <span class="text-xs text-slate-300 leading-relaxed">{{ log.text }}</span>
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+
+            <!-- Final analytics grid -->
+            @if (revealedStats() > 0) {
+              <div class="animate-slide-up">
+                <p class="text-xs font-mono uppercase tracking-widest text-slate-400 mb-3">Campaign Analytics</p>
+                <div class="grid grid-cols-2 gap-3">
+                  @for (stat of finalStats; track stat.label; let i = $index) {
+                    @if (revealedStats() > i) {
+                      <div
+                        class="rounded-xl border p-3 text-center animate-slide-up"
+                        [ngClass]="stat.color === 'emerald' ? 'bg-emerald-500/5 border-emerald-500/25' :
+                                   stat.color === 'cyan'    ? 'bg-cyan-500/5 border-cyan-500/25' :
+                                   stat.color === 'yellow'  ? 'bg-yellow-500/5 border-yellow-500/25' :
+                                                              'bg-red-500/5 border-red-500/25'"
+                      >
+                        <div
+                          class="text-xl font-bold font-mono"
+                          [ngClass]="stat.color === 'emerald' ? 'text-emerald-400' :
+                                     stat.color === 'cyan'    ? 'text-cyan-400' :
+                                     stat.color === 'yellow'  ? 'text-yellow-400' :
+                                                                'text-red-400'"
+                        >{{ stat.value }}</div>
+                        <div class="text-xs font-mono text-slate-400 mt-0.5">{{ stat.label }}</div>
+                        <div class="text-xs font-mono text-slate-600">{{ stat.pct }}</div>
+                      </div>
+                    }
+                  }
+                </div>
+              </div>
+            }
+
+          }
+
+        </div>
+      </div>
+
+      <!-- Verdict banner -->
+      @if (showVerdict()) {
+        <div class="animate-slide-up bg-emerald-500/10 border-t-2 border-emerald-500/50 px-6 py-4 flex items-center gap-4">
+          <svg class="w-5 h-5 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <div class="flex-1">
+            <span class="text-emerald-400 font-bold font-mono text-sm">CAMPAIGN DELIVERED</span>
+            <span class="text-slate-400 text-sm ml-3">9,891 of 10,247 reached · 96.5% success · 1,688 via SMS fallback</span>
+          </div>
+          <span class="font-mono text-xs text-slate-500">CID-C4821 · Completed</span>
+        </div>
+      }
+    </div>
+
+    <!-- Recruiter Insight -->
+    <div class="glass-card p-5 border-l-4 border-cyan-500 flex items-start gap-4 mb-6">
+      <svg class="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <div>
+        <p class="text-xs font-mono uppercase tracking-widest text-cyan-400 mb-1">Recruiter Insight</p>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          This is not a simple "send message" feature — it is a reliable, observable delivery pipeline.
+          Batched async processing with Redis state management, intelligent SMS fallback, and webhook-based
+          receipt tracking demonstrates production-grade thinking: optimistic delivery, graceful degradation,
+          and full observability at scale.
+        </p>
+      </div>
+    </div>
+
+    <!-- Spring Boot code snippet -->
+    <div class="glass-card overflow-hidden">
+      <button
+        (click)="showCode.set(!showCode())"
+        class="w-full px-6 py-4 flex items-center justify-between hover:bg-white/3 transition-colors"
+      >
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-mono uppercase tracking-widest text-slate-400">Spring Boot Backend</span>
+          <span class="badge-cyan text-xs font-mono">CampaignDispatchService.java</span>
+        </div>
+        <svg
+          class="w-4 h-4 text-slate-500 transition-transform duration-200"
+          [class.rotate-180]="showCode()"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </button>
+
+      @if (showCode()) {
+        <div class="border-t border-white/10 bg-slate-950/80 p-6 overflow-x-auto animate-slide-up">
+          <pre class="font-mono text-sm leading-relaxed"><span class="text-violet-400">&#64;Service</span>
+<span class="text-violet-400">&#64;RequiredArgsConstructor</span>
+<span class="text-blue-400">public class</span> <span class="text-cyan-300">CampaignDispatchService</span> &#123;
+
+  <span class="text-blue-400">private final</span> <span class="text-cyan-300">WhatsAppClient</span>                  whatsAppClient;
+  <span class="text-blue-400">private final</span> <span class="text-cyan-300">SmsClient</span>                       smsClient;
+  <span class="text-blue-400">private final</span> <span class="text-cyan-300">RedisTemplate</span>&lt;String, String&gt; redis;
+  <span class="text-blue-400">private final</span> <span class="text-cyan-300">CampaignRepository</span>              campaignRepo;
+
+  <span class="text-blue-400">private static final int</span> BATCH_SIZE = <span class="text-orange-400">2_500</span>;
+
+  <span class="text-blue-400">public void</span> <span class="text-yellow-300">dispatch</span>(<span class="text-cyan-300">Campaign</span> campaign) &#123;
+    <span class="text-cyan-300">List</span>&lt;<span class="text-cyan-300">Recipient</span>&gt; recipients = campaign.<span class="text-yellow-300">getRecipients</span>();
+
+    <span class="text-slate-500">// Seed Redis delivery-state for real-time dashboard tracking</span>
+    <span class="text-cyan-300">Map</span>&lt;String, String&gt; statusMap = recipients.<span class="text-yellow-300">stream</span>()
+      .<span class="text-yellow-300">collect</span>(<span class="text-yellow-300">toMap</span>(<span class="text-cyan-300">Recipient</span>::<span class="text-yellow-300">getId</span>, r -&gt; <span class="text-emerald-400">"PENDING"</span>));
+    redis.<span class="text-yellow-300">opsForHash</span>().<span class="text-yellow-300">putAll</span>(<span class="text-emerald-400">"campaign:"</span> + campaign.<span class="text-yellow-300">getId</span>(), statusMap);
+
+    <span class="text-slate-500">// Async batched dispatch — non-blocking, respects WhatsApp rate limits</span>
+    <span class="text-cyan-300">Lists</span>.<span class="text-yellow-300">partition</span>(recipients, BATCH_SIZE)
+         .<span class="text-yellow-300">forEach</span>(batch -&gt;
+           <span class="text-cyan-300">CompletableFuture</span>.<span class="text-yellow-300">runAsync</span>(() -&gt; <span class="text-yellow-300">processBatch</span>(campaign, batch))
+         );
+  &#125;
+
+  <span class="text-blue-400">private void</span> <span class="text-yellow-300">processBatch</span>(<span class="text-cyan-300">Campaign</span> campaign, <span class="text-cyan-300">List</span>&lt;<span class="text-cyan-300">Recipient</span>&gt; batch) &#123;
+    batch.<span class="text-yellow-300">forEach</span>(recipient -&gt; &#123;
+      String msg = <span class="text-cyan-300">TemplateEngine</span>.<span class="text-yellow-300">render</span>(campaign.<span class="text-yellow-300">getTemplate</span>(), recipient);
+      <span class="text-blue-400">try</span> &#123;
+        whatsAppClient.<span class="text-yellow-300">send</span>(recipient.<span class="text-yellow-300">getPhone</span>(), msg);
+        <span class="text-yellow-300">updateStatus</span>(campaign.<span class="text-yellow-300">getId</span>(), recipient.<span class="text-yellow-300">getId</span>(), <span class="text-emerald-400">"DELIVERED"</span>);
+      &#125; <span class="text-blue-400">catch</span> (<span class="text-cyan-300">WhatsAppException</span> e) &#123;
+        <span class="text-slate-500">// Automatic SMS fallback for unreachable WhatsApp numbers</span>
+        smsClient.<span class="text-yellow-300">send</span>(recipient.<span class="text-yellow-300">getPhone</span>(), msg);
+        <span class="text-yellow-300">updateStatus</span>(campaign.<span class="text-yellow-300">getId</span>(), recipient.<span class="text-yellow-300">getId</span>(), <span class="text-emerald-400">"SMS_FALLBACK"</span>);
+      &#125;
+    &#125;);
+  &#125;
+
+  <span class="text-blue-400">private void</span> <span class="text-yellow-300">updateStatus</span>(String campaignId, String recipientId, String status) &#123;
+    redis.<span class="text-yellow-300">opsForHash</span>().<span class="text-yellow-300">put</span>(<span class="text-emerald-400">"campaign:"</span> + campaignId, recipientId, status);
+    campaignRepo.<span class="text-yellow-300">incrementCounter</span>(campaignId, status);
+  &#125;
+&#125;</pre>
+        </div>
+      }
+    </div>
+
+  </div>
+</section>

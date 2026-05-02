@@ -1,0 +1,59 @@
+<section id="projects" class="py-24 px-6 max-w-6xl mx-auto">
+  <!-- Section header -->
+  <div class="mb-12">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="h-px flex-1 bg-gradient-to-r from-transparent to-white/10"></div>
+      <span class="badge-cyan text-xs tracking-widest uppercase font-mono">Portfolio</span>
+      <div class="h-px flex-1 bg-gradient-to-l from-transparent to-white/10"></div>
+    </div>
+    <h2 class="section-title text-center">Production Applications</h2>
+    <p class="section-subtitle text-center mx-auto">
+      Seven enterprise-grade systems actively used across the organization — each with measurable business impact.
+    </p>
+
+    <!-- Filter pills -->
+    <div class="flex justify-center gap-3 mb-10">
+      @for (f of filters; track f.value) {
+        <button
+          (click)="activeFilter.set(f.value)"
+          class="px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200"
+          [ngClass]="activeFilter() === f.value
+            ? 'bg-gradient-to-r from-cyan-500 to-indigo-500 text-white shadow-lg'
+            : 'bg-white/5 text-slate-400 hover:bg-white/10'"
+        >
+          {{ f.label }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Full rows -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    @for (project of fullRows(); track project.id; let i = $index) {
+      <div
+        class="animate-slide-up"
+        [style.animation-delay]="(i * 100) + 'ms'"
+        [style.opacity]="'0'"
+        [style.animation-fill-mode]="'forwards'"
+      >
+        <app-project-card [project]="project"/>
+      </div>
+    }
+  </div>
+
+  <!-- Last row — centered when 1 or 2 cards remain -->
+  @if (lastRow().length > 0) {
+    <div class="flex justify-center gap-6 mt-6">
+      @for (project of lastRow(); track project.id; let i = $index) {
+        <div
+          class="last-row-card animate-slide-up"
+          [style.animation-delay]="((fullRows().length + i) * 100) + 'ms'"
+          [style.opacity]="'0'"
+          [style.animation-fill-mode]="'forwards'"
+        >
+          <app-project-card [project]="project"/>
+        </div>
+      }
+    </div>
+  }
+</section>

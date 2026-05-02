@@ -1,0 +1,318 @@
+<section id="feature-spotlight" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Section header -->
+    <div class="mb-12 text-center">
+      <div class="flex items-center justify-center gap-3 mb-4">
+        <div class="h-px w-16 bg-gradient-to-r from-transparent to-white/10"></div>
+        <span class="badge-cyan tracking-widest uppercase font-mono text-xs">Medical Appointment System</span>
+        <div class="h-px w-16 bg-gradient-to-l from-transparent to-white/10"></div>
+      </div>
+      <h2 class="section-title">AI Prescription Suggestions</h2>
+      <p class="section-subtitle mx-auto">
+        An AI safety layer that analyses prescribed medicines against a patient's full history —
+        detecting drug-allergy conflicts and recommending follow-up procedures in real time.
+      </p>
+    </div>
+
+    <!-- Challenge / Solution / Impact -->
+    <div class="grid md:grid-cols-3 gap-5 mb-10">
+      <div class="glass-card p-6 border-t-2 border-red-500/50">
+        <p class="text-xs font-mono uppercase tracking-widest text-red-400 mb-3">The Challenge</p>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          Digital prescriptions lacked cross-referencing with full patient history, creating
+          risk of drug-allergy conflicts and missed procedural follow-ups.
+        </p>
+      </div>
+      <div class="glass-card p-6 border-t-2 border-blue-500/50">
+        <p class="text-xs font-mono uppercase tracking-widest text-blue-400 mb-3">The Solution</p>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          Integrated an LLM API with custom prompt engineering to analyze prescribed medicines
+          against stored patient history and medical reports in real time.
+        </p>
+      </div>
+      <div class="glass-card p-6 border-t-2 border-emerald-500/50">
+        <p class="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-3">The Impact</p>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          A "Safety-First" layer that flags allergies and suggests standard follow-up procedures
+          — like mandatory blood tests for specific medications — before finalizing.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── SafeScript AI Lab ── -->
+    <div class="rounded-2xl overflow-hidden border border-slate-700/60 shadow-2xl shadow-black/50 mb-8">
+
+      <!-- Lab title bar -->
+      <div class="bg-slate-800 px-5 py-3 flex items-center gap-3 border-b border-slate-700/60">
+        <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+        <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+        <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+        <span class="ml-3 font-mono text-xs text-slate-400 tracking-wide">
+          SafeScript AI Lab &nbsp;·&nbsp; POST /api/v1/prescription/safety-check
+        </span>
+        <div class="ml-auto flex items-center gap-3">
+          @if (state() === 'pending') {
+            <span class="flex items-center gap-2 text-xs font-mono text-blue-400 animate-pulse">
+              <svg class="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+              </svg>
+              Analyzing...
+            </span>
+          }
+          <button
+            (click)="runAnalysis()"
+            class="text-xs font-mono px-4 py-1.5 rounded-lg transition-all duration-200"
+            [ngClass]="state() === 'idle'
+              ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30 hover:bg-blue-500/30'
+              : 'bg-slate-700 text-slate-400 border border-slate-600 hover:bg-slate-600'"
+          >
+            {{ state() === 'idle' ? '▶ Run AI Safety Check' : '↺ Reset' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Two-panel body -->
+      <div class="bg-slate-950 grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-slate-800">
+
+        <!-- LEFT: Patient profile + prescription -->
+        <div class="p-6 space-y-6">
+
+          <!-- Patient header -->
+          <div>
+            <p class="text-xs font-mono uppercase tracking-widest text-blue-400 mb-4">▸ Patient Record</p>
+            <div class="glass-card p-4 space-y-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-sm font-mono shrink-0">
+                  SC
+                </div>
+                <div>
+                  <div class="font-semibold text-white text-sm">Sarah Chen</div>
+                  <div class="text-xs text-slate-500 font-mono">45F &nbsp;·&nbsp; MRN-2041 &nbsp;·&nbsp; 3 visits</div>
+                </div>
+              </div>
+              <div class="border-t border-slate-700/60 pt-3 space-y-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
+                  <span class="text-xs font-mono text-red-400">Allergy: Penicillin (Severity: High)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0"></span>
+                  <span class="text-xs font-mono text-slate-400">Condition: Type 2 Diabetes Mellitus</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0"></span>
+                  <span class="text-xs font-mono text-slate-400">Condition: Hypertension (Stage 1)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Prescribed drugs -->
+          <div>
+            <p class="text-xs font-mono uppercase tracking-widest text-slate-500 mb-3">▸ Prescribed Today</p>
+            <div class="space-y-2">
+              @for (drug of prescribedDrugs; track drug.name; let i = $index) {
+                <div
+                  class="flex items-center gap-3 p-3 rounded-xl border transition-all duration-300"
+                  [ngClass]="state() !== 'idle' && revealedDrugs() > i
+                    ? (drugResults[i].status === 'alert'
+                        ? 'border-red-500/40 bg-red-500/5'
+                        : 'border-emerald-500/30 bg-emerald-500/5')
+                    : 'border-slate-800 bg-slate-900/50'"
+                >
+                  <div
+                    class="w-9 h-9 rounded-lg flex items-center justify-center text-xs font-bold font-mono shrink-0 transition-colors duration-300"
+                    [ngClass]="state() !== 'idle' && revealedDrugs() > i
+                      ? (drugResults[i].status === 'alert' ? 'bg-red-500/20 text-red-300' : 'bg-emerald-500/20 text-emerald-300')
+                      : 'bg-slate-800 text-slate-400'"
+                  >
+                    {{ drug.initials }}
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="text-sm font-medium text-white">{{ drug.name }} <span class="text-slate-400">{{ drug.dosage }}</span></div>
+                    <div class="text-xs text-slate-500 font-mono">{{ drug.category }}</div>
+                  </div>
+                  @if (state() !== 'idle' && revealedDrugs() > i) {
+                    <span
+                      class="text-xs font-mono px-2 py-0.5 rounded-full border shrink-0"
+                      [ngClass]="drugResults[i].status === 'alert'
+                        ? 'bg-red-500/10 text-red-400 border-red-500/30'
+                        : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'"
+                    >{{ drugResults[i].status === 'alert' ? '⚠ ALERT' : '✓ SAFE' }}</span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: AI analysis output -->
+        <div class="p-6 flex flex-col gap-4 min-h-[400px]">
+          <p class="text-xs font-mono uppercase tracking-widest text-cyan-400">▸ AI Safety Analysis</p>
+
+          @if (state() === 'idle') {
+            <div class="flex-1 flex flex-col items-center justify-center text-center gap-3 opacity-30">
+              <svg class="w-10 h-10 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+              <p class="text-sm font-mono text-slate-500">Press "Run AI Safety Check" to begin analysis</p>
+            </div>
+          }
+
+          @if (state() === 'pending' && revealedDrugs() === 0) {
+            <div class="flex items-center gap-3 text-blue-400 font-mono text-sm animate-pulse p-3 bg-blue-500/5 rounded-xl border border-blue-500/20">
+              <svg class="w-4 h-4 animate-spin shrink-0" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+              </svg>
+              Initializing SafeScript AI · Cross-referencing patient EMR...
+            </div>
+          }
+
+          <!-- Drug result cards -->
+          <div class="space-y-3">
+            @for (result of drugResults; track result.drug; let i = $index) {
+              @if (revealedDrugs() > i) {
+                <div
+                  class="rounded-xl border p-4 space-y-1.5 animate-slide-up"
+                  [ngClass]="result.status === 'alert'
+                    ? 'bg-red-500/8 border-red-500/30'
+                    : 'bg-emerald-500/5 border-emerald-500/25'"
+                >
+                  <div
+                    class="text-sm font-bold font-mono"
+                    [ngClass]="result.status === 'alert' ? 'text-red-400' : 'text-emerald-400'"
+                  >{{ result.headline }}</div>
+                  <div class="text-xs text-slate-400 leading-relaxed font-mono">{{ result.drug }}</div>
+                  <p class="text-sm text-slate-300 leading-relaxed">{{ result.detail }}</p>
+                  @if (result.recommendation) {
+                    <p class="text-xs font-mono text-slate-500 pt-1 border-t border-slate-700/50">
+                      {{ result.recommendation }}
+                    </p>
+                  }
+                </div>
+              }
+            }
+          </div>
+
+          <!-- Follow-up procedures -->
+          @if (revealedProcs() > 0) {
+            <div class="animate-slide-up">
+              <p class="text-xs font-mono uppercase tracking-widest text-blue-400 mb-2">Suggested Follow-Up Procedures</p>
+              <div class="space-y-2">
+                @for (proc of procedures; track proc.name; let i = $index) {
+                  @if (revealedProcs() > i) {
+                    <div class="flex items-start gap-3 p-3 rounded-lg bg-blue-500/5 border border-blue-500/20 animate-slide-up">
+                      <span class="text-blue-400 text-xs mt-0.5 shrink-0">►</span>
+                      <div>
+                        <div class="text-sm font-medium text-slate-200">{{ proc.name }}
+                          <span class="ml-2 text-xs font-mono bg-red-500/15 text-red-400 border border-red-500/25 px-1.5 py-0.5 rounded uppercase">{{ proc.priority }}</span>
+                        </div>
+                        <div class="text-xs text-slate-500 font-mono mt-0.5">{{ proc.reason }}</div>
+                      </div>
+                    </div>
+                  }
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Verdict banner -->
+      @if (showVerdict()) {
+        <div class="animate-slide-up bg-red-500/10 border-t-2 border-red-500/50 px-6 py-4 flex items-center gap-4">
+          <svg class="w-5 h-5 text-red-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+          <div class="flex-1">
+            <span class="text-red-400 font-bold font-mono text-sm">PRESCRIPTION FLAGGED</span>
+            <span class="text-slate-400 text-sm ml-3">1 critical allergy conflict · 3 urgent follow-up procedures recommended</span>
+          </div>
+          <span class="font-mono text-xs text-slate-500">Reviewed by SafeScript AI v2.1</span>
+        </div>
+      }
+    </div>
+
+    <!-- Recruiter Insight -->
+    <div class="glass-card p-5 border-l-4 border-blue-500 flex items-start gap-4 mb-6">
+      <svg class="w-5 h-5 text-blue-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <div>
+        <p class="text-xs font-mono uppercase tracking-widest text-blue-400 mb-1">Recruiter Insight</p>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          Integrating an LLM API into a clinical workflow is not just a technical feature —
+          it is a patient-safety mechanism. This demonstrates the ability to apply AI
+          responsibly in high-stakes domains, not just prototype demos.
+        </p>
+      </div>
+    </div>
+
+    <!-- Spring Boot service snippet -->
+    <div class="glass-card overflow-hidden">
+      <button
+        (click)="showCode.set(!showCode())"
+        class="w-full px-6 py-4 flex items-center justify-between hover:bg-white/3 transition-colors"
+      >
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-mono uppercase tracking-widest text-slate-400">Spring Boot Backend</span>
+          <span class="badge-indigo text-xs font-mono">PrescriptionSafetyService.java</span>
+        </div>
+        <svg
+          class="w-4 h-4 text-slate-500 transition-transform duration-200"
+          [class.rotate-180]="showCode()"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </button>
+
+      @if (showCode()) {
+        <div class="border-t border-white/10 bg-slate-950/80 p-6 overflow-x-auto animate-slide-up">
+          <pre class="font-mono text-sm leading-relaxed"><span class="text-violet-400">&#64;Service</span>
+<span class="text-violet-400">&#64;RequiredArgsConstructor</span>
+<span class="text-blue-400">public class</span> <span class="text-cyan-300">PrescriptionSafetyService</span> &#123;
+
+  <span class="text-violet-400">&#64;Value</span>(<span class="text-emerald-400">"$&#123;llm.api.key&#125;"</span>)
+  <span class="text-blue-400">private</span> String llmApiKey;
+
+  <span class="text-blue-400">public</span> <span class="text-cyan-300">SafetyAnalysisResult</span> <span class="text-yellow-300">analyze</span>(
+      <span class="text-cyan-300">Prescription</span> rx, <span class="text-cyan-300">PatientHistory</span> history) &#123;
+
+    <span class="text-slate-500">// Build context-aware prompt — no raw PII in log output</span>
+    String prompt = <span class="text-emerald-400">"""
+        Patient allergies  : %s
+        Active conditions  : %s
+        Prescribed today   : %s
+
+        Flag drug-allergy conflicts, contraindications,
+        and list mandatory follow-up procedures as JSON.
+        """</span>.formatted(
+          history.<span class="text-yellow-300">getAllergies</span>(),
+          history.<span class="text-yellow-300">getConditions</span>(),
+          rx.<span class="text-yellow-300">getMedicationsSummary</span>()
+        );
+
+    LLMResponse raw = llmClient.<span class="text-yellow-300">complete</span>(
+      <span class="text-cyan-300">SystemMessage</span>.<span class="text-yellow-300">of</span>(CLINICAL_SAFETY_SYSTEM_PROMPT),
+      <span class="text-cyan-300">UserMessage</span>.<span class="text-yellow-300">of</span>(prompt)
+    );
+
+    <span class="text-slate-500">// Deserialize into typed SafetyAnalysisResult (alerts + procedures)</span>
+    <span class="text-blue-400">return</span> objectMapper.<span class="text-yellow-300">readValue</span>(
+      raw.<span class="text-yellow-300">content</span>(), <span class="text-cyan-300">SafetyAnalysisResult</span>.<span class="text-blue-400">class</span>
+    );
+  &#125;
+&#125;</pre>
+        </div>
+      }
+    </div>
+
+  </div>
+</section>

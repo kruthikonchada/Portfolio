@@ -1,0 +1,136 @@
+<footer class="py-16 px-6 border-t border-white/10 bg-slate-950">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="grid md:grid-cols-3 gap-10 mb-12">
+
+      <!-- Brand -->
+      <div>
+        <div class="font-mono text-xl font-bold gradient-text mb-3">
+          KK<span class="text-cyan-400">.</span>dev
+        </div>
+        <p class="text-slate-500 text-sm leading-relaxed max-w-xs">
+          Full Stack Java Developer building scalable enterprise systems with Spring Boot,
+          Angular, and Redis caching.
+        </p>
+      </div>
+
+      <!-- Quick links -->
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Navigate</h4>
+        <ul class="space-y-2">
+          @for (link of links; track link.label) {
+            <li>
+              <a
+                (click)="scrollTo(link.id)"
+                class="text-slate-500 hover:text-cyan-400 transition-colors text-sm cursor-pointer"
+              >
+                {{ link.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Get In Touch</h4>
+        <div class="space-y-3">
+          <a
+            href="mailto:kruthi.konchada12&#64;gmail.com"
+            class="flex items-center gap-2 text-slate-500 hover:text-cyan-400 transition-colors text-sm"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            kruthi.konchada12&#64;gmail.com
+          </a>
+          <a
+            href="https://linkedin.com/in/kruthi-konchada"
+            target="_blank"
+            rel="noopener"
+            class="flex items-center gap-2 text-slate-500 hover:text-cyan-400 transition-colors text-sm"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            linkedin.com/in/kruthi-konchada
+          </a>
+          <a
+            href="https://github.com/kruthikonchada"
+            target="_blank"
+            rel="noopener"
+            class="flex items-center gap-2 text-slate-500 hover:text-cyan-400 transition-colors text-sm"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+            </svg>
+            github.com/kruthikonchada
+          </a>
+          <p class="flex items-center gap-2 text-slate-500 text-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            Hyderabad, Telangana, India
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- AWS Deployment Badge -->
+    <div class="mb-6 rounded-xl border border-amber-500/20 bg-amber-500/[0.04] px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+
+      <!-- Live indicator + label -->
+      <div class="flex items-center gap-2.5 shrink-0">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        </span>
+        <span class="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest">Live on AWS</span>
+      </div>
+
+      <!-- Divider -->
+      <div class="hidden sm:block w-px h-4 bg-white/10 shrink-0"></div>
+
+      <!-- Architecture stack -->
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-mono text-slate-400">
+        <span class="flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>
+          Angular 19
+          <span class="text-slate-600">(S3 + CloudFront)</span>
+        </span>
+        <span class="text-slate-700">|</span>
+        <span class="flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 shrink-0"></span>
+          Spring Boot
+          <span class="text-slate-600">(EC2 Auto Scaling)</span>
+        </span>
+        <span class="text-slate-700">|</span>
+        <span class="flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0"></span>
+          MySQL
+          <span class="text-slate-600">(RDS Multi-AZ)</span>
+        </span>
+        <span class="text-slate-700">|</span>
+        <span class="flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span>
+          Redis
+          <span class="text-slate-600">(ElastiCache)</span>
+        </span>
+      </div>
+
+      <!-- AWS logo text -->
+      <div class="sm:ml-auto shrink-0">
+        <span class="text-xs font-mono font-black text-amber-500/70 tracking-wider">☁ AWS</span>
+      </div>
+    </div>
+
+    <div class="pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-600">
+      <p>&#169; 2025 Kruthi Konchada &middot; Full Stack Java Developer</p>
+      <p class="font-mono">Built with Angular 19 &middot; Tailwind CSS &middot; Signals</p>
+    </div>
+  </div>
+</footer>

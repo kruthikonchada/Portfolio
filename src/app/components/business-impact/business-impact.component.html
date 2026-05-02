@@ -1,0 +1,109 @@
+<section id="business-impact" class="py-24 px-6 bg-slate-950/60">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Section header -->
+    <div class="mb-14 text-center">
+      <div class="flex items-center justify-center gap-3 mb-4">
+        <div class="h-px w-16 bg-gradient-to-r from-transparent to-white/10"></div>
+        <span class="badge-emerald tracking-widest uppercase font-mono text-xs">Impact</span>
+        <div class="h-px w-16 bg-gradient-to-l from-transparent to-white/10"></div>
+      </div>
+      <h2 class="section-title">Business Impact</h2>
+      <p class="section-subtitle mx-auto">
+        Measurable outcomes delivered across production systems — every number backed by real usage data.
+      </p>
+    </div>
+
+    <!-- Impact cards grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      @for (card of cards; track card.label; let i = $index) {
+        <div
+          class="glass-card p-8 relative overflow-hidden transition-all duration-300 hover:shadow-xl group"
+          [ngClass]="card.cardClasses"
+        >
+          <!-- Subtle background glow -->
+          <div
+            class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
+            [ngClass]="card.glowClasses"
+          ></div>
+
+          <div class="relative z-10">
+            <!-- Icon + metric row -->
+            <div class="flex items-start justify-between mb-6">
+
+              <!-- Icon -->
+              <div class="p-3 rounded-xl" [ngClass]="card.iconClasses">
+                <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    [attr.d]="card.svgPath"
+                  />
+                </svg>
+              </div>
+
+              <!-- Metric -->
+              <div class="text-right">
+                @if (card.isZero) {
+                  <div class="flex flex-col items-end gap-1">
+                    <span
+                      class="font-mono text-5xl font-black leading-none"
+                      [ngClass]="card.metricClasses"
+                    >Zero</span>
+                    <span class="flex items-center gap-1.5 text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+                      <span class="relative flex h-1.5 w-1.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                      </span>
+                      Maintained
+                    </span>
+                  </div>
+                } @else {
+                  <div
+                    class="font-mono text-5xl font-black leading-none tabular-nums"
+                    [ngClass]="[card.metricClasses, animated() ? '' : 'opacity-0']"
+                    [class.opacity-100]="animated()"
+                    style="transition: opacity 0.3s ease"
+                  >
+                    {{ displayValues()[i] }}{{ card.suffix }}
+                  </div>
+                }
+              </div>
+            </div>
+
+            <!-- Label & sublabel -->
+            <div class="mb-3">
+              <h3 class="text-xl font-bold text-white mb-0.5">{{ card.label }}</h3>
+              <p class="text-sm font-mono uppercase tracking-widest" [ngClass]="card.metricClasses" style="opacity: 0.7">
+                {{ card.sublabel }}
+              </p>
+            </div>
+
+            <!-- Description -->
+            <p class="text-slate-400 text-sm leading-relaxed">
+              {{ card.description }}
+            </p>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Recruiter Insight -->
+    <div class="glass-card p-5 border-l-4 border-emerald-500 flex items-start gap-4 mt-6">
+      <svg class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <div>
+        <p class="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-1">Recruiter Insight</p>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          Every metric here maps directly to a business outcome — faster payroll means lower
+          HR overhead, fewer data errors mean less reconciliation cost, and zero security
+          incidents mean zero liability. These are not side-effects; they were the goal.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
